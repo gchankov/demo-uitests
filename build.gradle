@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group 'org.demo-uitests'
+version '1.0.0'
+
+wrapper.gradleVersion = '5.5.1'
+def cucumberVersion = '4.7.4'
+def junitVersion = '5.6.2'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+
+    testImplementation "io.github.bonigarcia:selenium-jupiter:3.3.4"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task deleteCucumberReports(type: Delete) {
+    dependsOn(clean)
+
+    delete 'out', 'target', 'build'
+}
+
+task runTests (type: Test){
+    dependsOn(deleteCucumberReports)
+    systemProperty "selenide.browser", System.getProperty("selenide.browser", "chrome")
+    systemProperty "selenide.headless", System.getProperty("selenide.headless", "false")
+}
