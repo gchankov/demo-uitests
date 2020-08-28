@@ -1,0 +1,15 @@
+FROM selenium/standalone-opera:latest
+
+RUN sudo apt-get update && \
+    sudo apt-get -y install openjdk-8-jdk \
+        wget \
+        zip \
+        unzip \
+        git \
+        ssh
+
+RUN sudo wget https://services.gradle.org/distributions/gradle-6.4.1-bin.zip -P /tmp && \
+    sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+
+ENV GRADLE_HOME=/opt/gradle/gradle-6.4.1
+ENV PATH=${GRADLE_HOME}/bin:${PATH}
