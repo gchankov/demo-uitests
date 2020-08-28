@@ -1,3 +1,3 @@
 # demo-uitests
 
-/gradlew runTests -Dselenide.broser=<chrome, firefox, edge, safari> -Dselenide.headless=<false, true>
+./gradle runTests -Dselenide.broser=<chrome, firefox, opera, edge, safari> -Dselenide.headless=<false, true>
